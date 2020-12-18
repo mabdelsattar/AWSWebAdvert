@@ -33,6 +33,11 @@ namespace WebAdvert.Web
                 RequireUppercase = false
                 };
             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Accounts/Login";
+            });
             services.AddControllersWithViews();
             
         }
@@ -58,7 +63,7 @@ namespace WebAdvert.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Accounts}/{action=SignUp}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

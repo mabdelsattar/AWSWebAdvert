@@ -66,7 +66,7 @@ namespace WebAdvert.Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Confirm_Post(ConfirmModel model)
-        {
+        { 
             //need to fetch user first 
            
                     
@@ -97,6 +97,33 @@ namespace WebAdvert.Web.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            return View(model);
+        }
+        [HttpPost]
+        [ActionName("Login")]
+        public async Task<IActionResult> LoginPost(LoginModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else 
+                {
+                    ModelState.AddModelError("LoginError", "Email and password do not match");
+                }
+
+            }
+            return View(model);
+        }
+
 
 
         public IActionResult Index()
